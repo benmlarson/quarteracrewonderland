@@ -4,7 +4,7 @@ title: Quarter Acre Wonderland
 ---
 
 <section class="hero">
-  <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1200&q=80" alt="A lush garden with vibrant flowers and greenery">
+  <img src="{{ '/assets/images/hero.jpg' | relative_url }}" alt="A garden archway with climbing vines, a birdbath, and raised beds">
   <div class="hero-overlay">
     <h1>Quarter Acre Wonderland</h1>
     <p>Big ideas for small gardens</p>
