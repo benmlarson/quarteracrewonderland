@@ -32,7 +32,7 @@ title: Quarter Acre Wonderland
     <h2>What You'll Find Here</h2>
 
     <ul>
-      <li><strong>Seasonal planting guides</strong> &mdash; what to plant and when, tailored for small spaces</li>
+      <li><strong>Seasonal planting guides</strong> &mdash; what to plant and when, tailored for small spaces in the Grand Valley</li>
       <li><strong>Garden design ideas</strong> &mdash; making the most of every square foot</li>
       <li><strong>Soil and composting tips</strong> &mdash; building healthy ground from the ground up</li>
       <li><strong>Harvest stories</strong> &mdash; celebrating the wins (and learning from the flops)</li>
