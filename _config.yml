@@ -1,0 +1,14 @@
+title: Quarter Acre Wonderland
+description: A gardening blog celebrating the magic of small-space gardening
+url: "https://quarteracrewonderland.com"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
