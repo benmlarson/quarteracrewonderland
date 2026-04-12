@@ -18,3 +18,4 @@
 - Add Google Analytics tracking
 - Add commenting on posts
 - Have a link back to a Facebook page on the site
+- Create static pages and add to navigation
