@@ -28,8 +28,8 @@
 
 <!-- Navigation
 ================================================== -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down">
-    <div class="container pr-0">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top mediumnavigation nav-down">
+    <div class="container pl-0 pr-0">
 
         <!-- Logo -->
         <a class="navbar-brand" href="{{ '/' | relative_url }}">
@@ -69,10 +69,23 @@
 </nav>
 <!-- End Navigation -->
 
-<div class="site-content">
+<div class="site-content{% if paginator %} site-content-home{% endif %}">
+
+{% if paginator %}
+<!-- Hero
+================================================== -->
+<section class="hero">
+    <img src="{{ '/assets/images/hero.jpg' | relative_url }}" alt="A garden archway with climbing vines, a birdbath, and raised beds">
+    <div class="hero-overlay">
+        <h1>{{ site.name }}</h1>
+        <p>{{ site.description }}</p>
+    </div>
+</section>
+{% endif %}
 
 <div class="container">
 
+{% unless paginator %}
 <!-- Site Title
 ================================================== -->
 <div class="mainheading">
@@ -81,6 +94,7 @@
         {{ site.description }}
     </p>
 </div>
+{% endunless %}
 
 <!-- Content
 ================================================== -->
