@@ -1,0 +1,16 @@
+main:
+  - title: Home
+    url: /
+  - title: Categories
+    url: /categories/
+    dropdown:
+      - title: Featured Gardens
+        url: /category/featured-gardens/
+      - title: Recipes
+        url: /category/recipes/
+      - title: Plant of the Month
+        url: /category/plant-of-the-month/
+  - title: Terminology
+    url: /horticulture-terminology/
+  - title: About
+    url: /about/
