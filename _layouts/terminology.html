@@ -1,0 +1,34 @@
+---
+layout: default
+---
+
+<section>
+    <div class="section-title">
+        <h2><span>{{ page.title }}</span></h2>
+    </div>
+
+    <div class="row">
+        <!-- Main content -->
+        <div class="col-md-8">
+            <div class="article-post">
+                {{ content }}
+            </div>
+        </div>
+
+        <!-- Table of Contents sidebar -->
+        <div class="col-md-4">
+            <div class="terminology-toc sticky-top sticky-top-offset">
+                <h4>Terms</h4>
+                <ul>
+                    {% assign headings = content | split: '<h3 id="' %}
+                    {% for heading in headings %}
+                        {% if forloop.first %}{% continue %}{% endif %}
+                        {% assign id = heading | split: '"' | first %}
+                        {% assign title = heading | split: '>' | slice: 1 | first | split: '<' | first %}
+                        <li><a href="#{{ id }}">{{ title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

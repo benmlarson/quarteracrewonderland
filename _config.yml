@@ -1,14 +1,51 @@
+# Site settings
 title: Quarter Acre Wonderland
-description: A gardening blog celebrating the magic of small-space gardening
+name: Quarter Acre Wonderland
+description: Big ideas for small gardens on Colorado's Western Slope
 url: "https://quarteracrewonderland.com"
 baseurl: ""
+logo: assets/images/logo.png
+favicon: assets/images/favicon.png
 
 # Build settings
 markdown: kramdown
-permalink: pretty
+permalink: /:title/
+include: ["_pages"]
+
+# Pagination
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+paginate: 6
+paginate_path: /page:num/
+
+# Authors
+authors:
+  leesa:
+    name: Leesa
+    display_name: Leesa
+    avatar: assets/images/logo.png
+    description: "Gardener, writer, and caretaker of a quarter acre wonderland on Colorado's Western Slope."
+
+# Kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+
+# Lazy images
+lazyimages: "enabled"
 
 # Exclude from build
 exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+  - docs/
+  - CNAME
+  - .claude/

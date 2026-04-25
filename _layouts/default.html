@@ -1,34 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title | default: site.title }}</title>
-  <meta name="description" content="{{ site.description }}">
-  <link rel="icon" type="image/png" href="{{ '/assets/images/favicon.png' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="icon" type="image/png" href="{{ '/assets/images/favicon.png' | relative_url }}">
+
+<title>{{ page.title | default: site.title }} | {{ site.name }}</title>
+
+{% seo %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+<link href="{{ '/assets/css/screen.css' | relative_url }}" rel="stylesheet">
+<link href="{{ '/assets/css/main.css' | relative_url }}" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script src="{{ '/assets/js/jquery.min.js' | relative_url }}"></script>
 </head>
-<body>
-  <header class="site-header">
-    <div class="container">
-      <div class="logo">
-        <img src="{{ '/assets/images/logo.png' | relative_url }}" alt="Quarter Acre Wonderland logo" class="logo-img">
-        <span class="site-title">{{ site.title }}</span>
-      </div>
-    </div>
-  </header>
 
-  <main>
+{% capture layout %}{% if page.layout %}layout-{{ page.layout }}{% endif %}{% endcapture %}
+<body class="{{ layout }}">
+
+<!-- Navigation
+================================================== -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top mediumnavigation nav-down">
+    <div class="container pl-0 pr-0">
+
+        <!-- Logo -->
+        <a class="navbar-brand" href="{{ '/' | relative_url }}">
+            <img src="{{ '/assets/images/logo.png' | relative_url }}" alt="{{ site.name }}">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarQAW" aria-controls="navbarQAW" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarQAW">
+            <ul class="navbar-nav ml-auto">
+                {% for item in site.data.navigation.main %}
+                {% if item.dropdown %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{{ item.url | relative_url }}" id="navDropdown{{ forloop.index }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ item.title }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navDropdown{{ forloop.index }}">
+                        {% for subitem in item.dropdown %}
+                        <a class="dropdown-item" href="{{ subitem.url | relative_url }}">{{ subitem.title }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item{% if page.url == item.url %} active{% endif %}">
+                    <a class="nav-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+
+                {% include search-lunr.html %}
+            </ul>
+        </div>
+
+    </div>
+</nav>
+<!-- End Navigation -->
+
+<div class="site-content{% if paginator %} site-content-home{% endif %}">
+
+{% if paginator %}
+<!-- Hero
+================================================== -->
+<section class="hero">
+    <img src="{{ '/assets/images/hero.jpg' | relative_url }}" alt="A garden archway with climbing vines, a birdbath, and raised beds">
+    <div class="hero-overlay">
+        <h1>{{ site.name }}</h1>
+        <p>{{ site.description }}</p>
+    </div>
+</section>
+{% endif %}
+
+<div class="container">
+
+{% unless paginator %}
+<!-- Site Title
+================================================== -->
+<div class="mainheading">
+    <h1 class="sitetitle">{{ site.name }}</h1>
+    <p class="lead">
+        {{ site.description }}
+    </p>
+</div>
+{% endunless %}
+
+<!-- Content
+================================================== -->
+<div class="main-content">
     {{ content }}
-  </main>
+</div>
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; {{ 'now' | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+</div>
+
+<!-- Categories Jumbotron
+================================================== -->
+<div class="jumbotron fortags">
+    <div class="d-md-flex h-100">
+        <div class="col-md-4 transpdark align-self-center text-center h-100">
+            <div class="d-md-flex align-items-center justify-content-center h-100">
+                <h2 class="d-md-block align-self-center py-1 font-weight-light">Explore <span class="d-none d-md-inline">&rarr;</span></h2>
+            </div>
+        </div>
+        <div class="col-md-8 p-5 align-self-center text-center">
+            {% assign categories_list = site.categories %}
+            {% if categories_list.first[0] == null %}
+                {% for category in categories_list %}
+                    <a class="mt-1 mb-1" href="{{ '/categories/' | relative_url }}#{{ category | url_escape | strip | replace: ' ', '-' }}">{{ category | capitalize }} ({{ site.tags[category].size }})</a>
+                {% endfor %}
+            {% else %}
+                {% for category in categories_list %}
+                    <a class="mt-1 mb-1" href="{{ '/categories/' | relative_url }}#{{ category[0] | url_escape | strip | replace: ' ', '-' }}">{{ category[0] | capitalize }} ({{ category[1].size }})</a>
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
-  </footer>
+</div>
+
+<!-- Footer
+================================================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 text-center text-lg-left">
+                &copy; {{ site.time | date: "%Y" }} {{ site.name }}
+            </div>
+            <div class="col-md-6 col-sm-6 text-center text-lg-right">
+                Big ideas for small gardens
+            </div>
+        </div>
+    </div>
+</footer>
+
+</div> <!-- /.site-content -->
+
+<!-- Scripts
+================================================== -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+
+<script src="{{ '/assets/js/mediumish.js' | relative_url }}"></script>
+
+{% if site.lazyimages == "enabled" %}
+<script src="{{ '/assets/js/lazyload.js' | relative_url }}"></script>
+{% endif %}
+
 </body>
 </html>
